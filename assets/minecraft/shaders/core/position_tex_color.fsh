@@ -1,7 +1,16 @@
 #version 330
 #extension GL_ARB_separate_shader_objects : require
 
-#include <minecraft:dynamictransforms.glsl>
+// Копия minecraft:dynamictransforms.glsl
+// ВАЖНО: core-шейдеры в 26.3 нельзя подключать через #include (они используются
+// на старте игры, до загрузки ресурспаков) — поэтому UBO вставлен копипастой,
+// ровно как делает Mojang в ванильном коде.
+layout(std140) uniform DynamicTransforms {
+    mat4 ModelViewMat;
+    mat4 TextureMat;
+    vec4 ColorModulator;
+    vec3 ModelOffset;
+};
 
 uniform sampler2D Sampler0;
 
@@ -12,21 +21,8 @@ layout(location = 0) out vec4 fragColor;
 
 void main() {
     vec4 color = texture(Sampler0, texCoord0) * vertexColor;
-
-    if (color.a < 0.01) {
+    if (color.a == 0.0) {
         discard;
     }
-
-    float r = color.r;
-    float g = color.g;
-    float b = color.b;
-
-    // Отсекает серую заливку кнопки и тёмные пиксели её текстурного края
-    bool isButtonTexture = (abs(r - g) < 0.15 && abs(g - b) < 0.15 && abs(r - b) < 0.15 && r < 0.85);
-
-    if (isButtonTexture) {
-        discard;
-    }
-
     fragColor = color * ColorModulator;
 }
