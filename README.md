@@ -68,3 +68,7 @@ for d in ('dialog', 'popup'):
 ## Установка
 Папка = ресурспак целиком (рядом `pack.mcmeta`). Скопируй в `.minecraft/resourcepacks/`, включи в
 Настройки → Наборы ресурсов. После любых правок PNG/FSH — F3+T.
+
+## Быстрый переключатель невидимости
+- `python3 tools/make_invisible_buttons.py` — кнопки в диалогах/попапах становятся полностью невидимыми (a=1/255), клики работают.
+- `git checkout -- assets/minecraft/textures/gui/sprites/dialog assets/minecraft/textures/gui/sprites/popup` — вернуть видимые бежевые тестовые спрайты.
