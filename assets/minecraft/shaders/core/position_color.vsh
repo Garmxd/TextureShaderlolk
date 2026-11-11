@@ -1,16 +1,8 @@
 #version 330
 #extension GL_ARB_separate_shader_objects : require
 
-// Копия minecraft:dynamictransforms.glsl + projection.glsl
-layout(std140) uniform DynamicTransforms {
-    mat4 ModelViewMat;
-    mat4 TextureMat;
-    vec4 ColorModulator;
-    vec3 ModelOffset;
-};
-layout(std140) uniform Projection {
-    mat4 ProjMat;
-};
+#include <minecraft:dynamictransforms.glsl>
+#include <minecraft:projection.glsl>
 
 layout(location = 0) in vec3 Position;
 layout(location = 1) in vec4 Color;
